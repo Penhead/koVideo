@@ -159,11 +159,24 @@ video{
 .marker {
   background-color: black ;
   width: 8px ;
-  height: 20px ;
+  height: 27px;
   position: absolute ;
   display: block;
-  top: 0;
+  top: 7px;
   z-index: 99 ;
+
+  .markerContent{
+    display: none;
+    position: absolute;
+    top: -9px;
+    left: 10px;
+    z-index: 99;
+    background: white;
+    padding: 2px 7px;
+  }
+  &:hover .markerContent {
+    display: block;
+  }
 }
 .loaderContainer {
   position: relative;
@@ -193,13 +206,15 @@ video{
 }
 .controls[data-state=visible] {
   display:block;
-  background: orangered;
-  padding: 3px;
+  background-color: $orange;
+  padding: 15px 3px 3px 3px;
+  height: 38px;
 }
 .controls > * {
   float:left;
   width:3.30625%;
   height:100%;
+  max-height: 18px;
   margin-left:0.1953125%;
   display:block;
 }

@@ -25,13 +25,18 @@ app.directive('videoDirective', function () {
                         var hasNoMarker = elem.find('#'+x.uid).length === 0;
                         if (idx !== 0 && hasNoMarker) {
                             var marker = document.createElement('span');
+                            var markerContent = document.createElement("span");
                             marker.className = "marker";
+                            markerContent.className = "markerContent";
+                            markerContent.innerHTML = x.name;
                             marker.style.left = Math.floor((Number($scope.cliplist[idx].start) / video.duration) * 100) + '%';
                             marker.id = $scope.cliplist[idx].uid;
                             marker.onclick = function () {
                                 $scope.setclip({idx: idx});
                                 $scope.$apply();
+                                video.play();
                             };
+                            marker.appendChild(markerContent);
                             elem.find('.progress')[0].appendChild(marker);
                         }
                     }
@@ -98,6 +103,8 @@ app.directive('videoDirective', function () {
                 }
             });
             $scope.$watch('clip', function (newValue, oldValue) {
+               console.log(newValue, oldValue);
+
                 if (newValue.uid === $scope.cliplist[0].uid && $scope.cliplist.length > 1) {
                     elem.find('.marker').each(function(x){
                         this.style.display = 'block';

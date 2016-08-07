@@ -48,6 +48,7 @@ app.controller('HomeController', function($scope, $http) {
     $scope.deleteClip = function (idx) {
         var clipLength = $scope.clips.length;
         $scope.clips.splice(idx, 1);
+        window.localStorage.setItem("clips", JSON.stringify($scope.clips));
         if (idx !== (clipLength -1) && idx !== 0) { $scope.selectClip(idx); }
         if (idx === (clipLength-1)) { $scope.selectClip(idx-1); }
     };
