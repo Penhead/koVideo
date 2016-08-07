@@ -1,0 +1,31 @@
+<html ng-app="app">
+<head>
+    <title>Krossover Test</title>
+    <link rel="stylesheet" type="text/css" href="assets/foundations/css/foundation.css">
+    <link rel="stylesheet" type="text/css" href="assets/sass/css/styles.css">
+
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,700,700italic,800,800italic,300italic,300' rel='stylesheet' type='text/css'>
+</head>
+    <body>
+        <div>
+            <div class="top-bar" >
+                <div class="row">
+                    <ul class="dropdown menu">
+                        <li class="menu-text">KrossOver VideoTest</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div ui-view></div>
+
+        <script src="assets/foundations/js/vendor/jquery.js"></script>
+        <script src="assets/foundations/js/vendor/foundation.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.10.0/validate.min.js"></script>
+        <script src="assets/angular/angular.js"></script>
+        <script src="assets/angular/ui-router.js"></script>
+        <script src="assets/js/app.js"></script>
+        <script src="controllers/home-controller.js"></script>
+        <script src="directives/videoplayer-directive.js"></script>
+    </body>
+</html>

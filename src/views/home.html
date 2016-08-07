@@ -1,0 +1,52 @@
+<div class="homeContainer">
+    <div class="row ">
+        <div class="small-7 columns">
+
+            <video-directive loading="loading" setclip="selectClip(idx)" cliplist="clips" clip="currentClip" src="currentClip.src"></video-directive>
+        </div>
+        <div class="small-5 columns">
+            <ul class="clipsQueue">
+                <li class="row" ng-repeat="clip in clips track by $index">
+                    <div class="small-4 columns">
+                        <div ng-show="currentClip.uid === clip.uid" class="circle"></div>
+                        <a ng-click="selectClip($index)">{{clip.name}}</a>
+                    </div>
+                    <div class="small-8 columns">
+                        <div class="row" ng-show="!$first">
+                            <div class="columns small-9" >
+                                <span class="editTime">
+                                    <input ng-model="clip.start" placeholder="start time" type="text">
+                                    <input  ng-model="clip.end" placeholder="end time" type="text">
+                                    <button ng-click="editclip($index)" class="edit">update</button>
+                                </span>
+                            </div>
+                            <p class="deleteBtn columns small-3" ng-click="deleteClip($index)">&#215;</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="addClips small-4 columns">
+            <h4>Add Clip</h4>
+            <form data-abide novalidate>
+                <label>
+                    <input placeholder="clip name" type="text" ng-model="form.name" required>
+                    <span class="form-error">Enter a clip name</span>
+                </label>
+                <label>
+                    <input type="text" ng-model="form.start">
+                    <span class="form-error">Enter a start time</span>
+                </label>
+                <label>
+                    <input type="text" ng-model="form.end">
+                    <span class="form-error">Enter an end time</span>
+                </label>
+                <button type="submit" ng-click="addClip(form)">Add Clip</button>
+            </form>
+        </div>
+    </div>
+
+</div>
