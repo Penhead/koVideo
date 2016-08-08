@@ -1,7 +1,7 @@
 # koVideo
 
 ###Project Setup
-make sure you have node and npm. Then run the following commands:
+Make sure you have node and npm. Then run the following commands:
 ```npm install
 npm start```
 
