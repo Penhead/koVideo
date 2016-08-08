@@ -43,13 +43,13 @@ app.directive('videoDirective', function () {
                 )
             };
 
-            elem.bind('keydown keypress', function(e){
+            elem.one(' keypress', function(e){
                 $scope.$apply(function () {
                     var index;
                     $scope.cliplist.filter(function (x, idx) { if ( x.uid === $scope.clip.uid) { index = idx; } });
                     if (index !== 0 && e.keyCode === 37){$scope.setclip({idx: index-1});}
                     if (index !== ($scope.cliplist.length -1) && e.keyCode === 39) { $scope.setclip({idx: index+1}); }
-                    if (e.keyCode === 32 && (video.paused || video.ended)) { video.play()}
+                    if (e.keyCode === 32 && (video.paused || video.ended)) {console.log('play'); video.play()}
                     else { video.pause(); }
                 });
             });
@@ -105,25 +105,27 @@ app.directive('videoDirective', function () {
             $scope.$watch('clip', function (newValue, oldValue) {
                console.log(newValue, oldValue);
 
-                if (newValue.uid === $scope.cliplist[0].uid && $scope.cliplist.length > 1) {
-                    elem.find('.marker').each(function(x){
-                        this.style.display = 'block';
-                    });
-                }
-                if (newValue.uid && elem.find('#'+newValue.uid).length > 0) {
-                    var marker = elem.find('#'+newValue.uid)[0];
-                    marker.style.left = Math.floor((Number(newValue.start) / video.duration) * 100) + '%';
-                }
-                if(newValue.uid !== $scope.cliplist[0].uid) {
-                    elem.find('.marker').each(function(x){
-                        this.style.display = 'none';
-                    });
+                if (newValue) {
+                    if (newValue.uid === $scope.cliplist[0].uid && $scope.cliplist.length > 1) {
+                        elem.find('.marker').each(function(x){
+                            this.style.display = 'block';
+                        });
+                    }
+                    if (newValue.uid && elem.find('#'+newValue.uid).length > 0) {
+                        var marker = elem.find('#'+newValue.uid)[0];
+                        marker.style.left = Math.floor((Number(newValue.start) / video.duration) * 100) + '%';
+                    }
+                    if(newValue.uid !== $scope.cliplist[0].uid) {
+                        elem.find('.marker').each(function(x){
+                            this.style.display = 'none';
+                        });
+                    }
                 }
             });
             $scope.$watch('src', function(newValue, oldValue) {
                 if (newValue) {
                     video.load();
-                    // video.play();
+
                     elem.find('video')[0].onended = function(e) { console.log(e);}
                 }
             });

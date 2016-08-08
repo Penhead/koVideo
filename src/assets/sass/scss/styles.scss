@@ -81,6 +81,9 @@ video{
       padding: 10px 20px;
       border-radius: 3px;
     }
+    .tagInput{
+      width: 100%;
+    }
     .editTime{
       margin-left: 30px;
       input{
@@ -99,6 +102,7 @@ video{
       padding: 8px;
     }
     li{
+      position: relative;
       padding: 8px 12px;
       border-bottom: 1px solid #2e2e2e;
       .deleteBtn{
@@ -158,7 +162,7 @@ video{
 /* controls */
 .marker {
   background-color: black ;
-  width: 8px ;
+  width: 5px ;
   height: 27px;
   position: absolute ;
   display: block;

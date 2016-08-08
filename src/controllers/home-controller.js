@@ -41,8 +41,10 @@ app.controller('HomeController', function($scope, $http) {
         };
     };
     $scope.editclip = function (idx) {
+        console.log($scope.clips);
         var srcString = $scope.clips[idx].src.split("#t=")[0];
         $scope.clips[idx].src = srcString+"#t="+$scope.clips[idx].start+","+$scope.clips[idx].end;
+        window.localStorage.setItem("clips", JSON.stringify($scope.clips));
         $scope.selectClip(idx);
     };
     $scope.deleteClip = function (idx) {
@@ -60,9 +62,7 @@ app.controller('HomeController', function($scope, $http) {
         $scope.formReset();
         window.localStorage.setItem("clips", JSON.stringify($scope.clips));
     };
-    $scope.selectClip = function (idx) {
-        $scope.currentClip = $scope.clips[idx];
-    };
+    $scope.selectClip = function (idx) { $scope.currentClip = $scope.clips[idx]; };
 
     $(document).foundation();
 });

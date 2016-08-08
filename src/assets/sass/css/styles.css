@@ -67,6 +67,8 @@ video {
       color: #fff;
       padding: 10px 20px;
       border-radius: 3px; }
+    .homeContainer .clipsQueue .tagInput {
+      width: 100%; }
     .homeContainer .clipsQueue .editTime {
       margin-left: 30px; }
       .homeContainer .clipsQueue .editTime input {
@@ -82,6 +84,7 @@ video {
       font-size: 14px;
       padding: 8px; }
     .homeContainer .clipsQueue li {
+      position: relative;
       padding: 8px 12px;
       border-bottom: 1px solid #2e2e2e; }
       .homeContainer .clipsQueue li .deleteBtn {
@@ -123,7 +126,7 @@ video {
 /* controls */
 .marker {
   background-color: black;
-  width: 8px;
+  width: 5px;
   height: 27px;
   position: absolute;
   display: block;
@@ -132,7 +135,7 @@ video {
   .marker .markerContent {
     display: none;
     position: absolute;
-    top: -5px;
+    top: -9px;
     left: 10px;
     z-index: 99;
     background: white;
