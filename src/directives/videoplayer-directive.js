@@ -29,8 +29,6 @@ app.directive('videoDirective', function () {
                             markerContent.className = "markerContent";
                             markerContent.innerHTML = x.name;
                             var position = $scope.cliplist[idx].start / video.duration * (elem.find('.progress')[0].offsetWidth) + elem.find('.progress')[0].offsetLeft;
-                            console.log(position);
-                            console.dir(elem.find('.progress')[0]);
                             marker.style.left = Math.floor(position) + 'px';
                             marker.id = $scope.cliplist[idx].uid;
                             marker.onclick = function () {
