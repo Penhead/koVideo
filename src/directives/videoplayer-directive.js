@@ -28,7 +28,10 @@ app.directive('videoDirective', function () {
                             marker.className = "marker";
                             markerContent.className = "markerContent";
                             markerContent.innerHTML = x.name;
-                            marker.style.left = Math.floor((Number($scope.cliplist[idx].start) / video.duration) * 100) + '%';
+                            var position = $scope.cliplist[idx].start / video.duration * (elem.find('.progress')[0].offsetWidth) + elem.find('.progress')[0].offsetLeft;
+                            console.log(position);
+                            console.dir(elem.find('.progress')[0]);
+                            marker.style.left = Math.floor(position) + 'px';
                             marker.id = $scope.cliplist[idx].uid;
                             marker.onclick = function () {
                                 $scope.setclip({idx: idx});
@@ -112,7 +115,9 @@ app.directive('videoDirective', function () {
                     }
                     if (newValue.uid && elem.find('#'+newValue.uid).length > 0) {
                         var marker = elem.find('#'+newValue.uid)[0];
-                        marker.style.left = Math.floor((Number(newValue.start) / video.duration) * 100) + '%';
+                        var position = newValue.start / video.duration * (elem.find('.progress')[0].offsetWidth) + elem.find('.progress')[0].offsetLeft;
+
+                        marker.style.left = Math.floor(position) + 'px';
                     }
                     if(newValue.uid !== $scope.cliplist[0].uid) {
                         elem.find('.marker').each(function(x){
