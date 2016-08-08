@@ -16,7 +16,6 @@ app.directive('videoDirective', function () {
             var mute =  elem.find('#mute');
             var progress =  elem.find('#progress');
             var progressBar =  elem.find('#progress-bar');
-            var fullscreen =  elem.find('#fs');
             var time = elem.find('#time');
 
             var updatePlayer = function () {
@@ -42,29 +41,7 @@ app.directive('videoDirective', function () {
                     }
                 )
             };
-
-            elem.one(' keypress', function(e){
-                $scope.$apply(function () {
-                    var index;
-                    $scope.cliplist.filter(function (x, idx) { if ( x.uid === $scope.clip.uid) { index = idx; } });
-                    if (index !== 0 && e.keyCode === 37){$scope.setclip({idx: index-1});}
-                    if (index !== ($scope.cliplist.length -1) && e.keyCode === 39) { $scope.setclip({idx: index+1}); }
-                    if (e.keyCode === 32 && (video.paused || video.ended)) {console.log('play'); video.play()}
-                    else { video.pause(); }
-                });
-            });
-            video.ontimeupdate =function () {
-                if (!progress[0].getAttribute('max')) progress[0].setAttribute('max', video.duration);
-                progress[0].value = video.currentTime;
-                time.html(Math.floor(video.currentTime).toString());
-                progressBar[0].style.width = Math.floor((video.currentTime / video.duration) * 100) + '%';
-            };
-            video.onloadedmetadata = function () {
-                time.html(video.duration.toString());
-                progress[0].setAttribute('max', video.duration);
-
-            };
-            video.onpause = function (e) {
+            var playNextClip = function () {
                 if ($scope.clip.end === Math.floor(video.currentTime).toString()) {
                     var nextVideo;
                     for (var i=0; i < $scope.cliplist.length; i++) {
@@ -83,6 +60,34 @@ app.directive('videoDirective', function () {
                     }, 3000)
                 }
             };
+
+            elem.one(' keypress', function(e){
+                $scope.$apply(function () {
+                    var index;
+                    $scope.cliplist.filter(function (x, idx) { if ( x.uid === $scope.clip.uid) { index = idx; } });
+                    if (index !== 0 && e.keyCode === 37){$scope.setclip({idx: index-1});}
+                    if (index !== ($scope.cliplist.length -1) && e.keyCode === 39) { $scope.setclip({idx: index+1}); }
+                    if (e.keyCode === 32 && (video.paused || video.ended)) { video.play() }
+                    else { video.pause(); }
+                });
+            });
+            video.ontimeupdate =function () {
+                if (!progress[0].getAttribute('max')) progress[0].setAttribute('max', video.duration);
+                progress[0].value = video.currentTime;
+                time.html(Math.floor(video.currentTime).toString());
+                progressBar[0].style.width = Math.floor((video.currentTime / video.duration) * 100) + '%';
+            };
+            video.onloadedmetadata = function () {
+                $scope.cliplist[0].end = Math.floor(video.duration).toString();
+                time.html(video.duration.toString());
+                progress[0].setAttribute('max', video.duration);
+                if($scope.clip.uid === $scope.cliplist[0].uid && $scope.cliplist.length > 1) {
+                    updatePlayer();
+                }
+            };
+            video.onpause = function (e) { playNextClip(); };
+            video.onended = function(e) { playNextClip(); };
+
             playpause.bind('click', function () {
                 if (video.paused || video.ended) video.play();
                 else video.pause();
@@ -96,14 +101,8 @@ app.directive('videoDirective', function () {
                 var pos = (e.pageX  - (progElem.offsetLeft + progElem.offsetParent.offsetLeft )) / progElem.offsetWidth;
                 video.currentTime = pos * video.duration;
             });
-            $scope.$watch('cliplist.length', function (a, b) {
-                console.log($scope.cliplist);
-                if($scope.clip.uid === $scope.cliplist[0].uid && $scope.cliplist.length > 1) {
-                    updatePlayer();
-                }
-            });
+
             $scope.$watch('clip', function (newValue, oldValue) {
-               console.log(newValue, oldValue);
 
                 if (newValue) {
                     if (newValue.uid === $scope.cliplist[0].uid && $scope.cliplist.length > 1) {
@@ -126,7 +125,6 @@ app.directive('videoDirective', function () {
                 if (newValue) {
                     video.load();
 
-                    elem.find('video')[0].onended = function(e) { console.log(e);}
                 }
             });
         }
